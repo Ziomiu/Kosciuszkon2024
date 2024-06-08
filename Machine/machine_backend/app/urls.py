@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views import (EventTypeViewSet, UserViewSet, UserBalanceViewSet,
                     UserBottleDetailsViewSet, MachineEventViewSet,
                     BottlesInAutomatViewSet, BottlesCollectionHistoryViewSet,
-                    AddressViewSet, MachineViewSet)
+                    AddressViewSet, MachineViewSet, LoginView)
 
 router = DefaultRouter()
 router.register(r'event-types', EventTypeViewSet)
@@ -18,4 +18,5 @@ router.register(r'machines', MachineViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('login/', LoginView.as_view(), name='login'),
 ]

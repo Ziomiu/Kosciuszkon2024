@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.functions import Now
-
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your models here.
 
@@ -20,8 +20,17 @@ class User(models.Model):
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
+    password = models.CharField(max_length=128)
     userBalanceId = models.ForeignKey('UserBalance', on_delete=models.CASCADE)
     userBottleDetailsId = models.ForeignKey('UserBottleDetails', on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        self.password = make_password(self.password)
+        super(User, self).save(*args, **kwargs)
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
+
     def __str__(self):
         return f"{self.name}  {self.surname}"
 
