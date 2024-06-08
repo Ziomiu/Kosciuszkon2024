@@ -4,11 +4,11 @@ from django.db.models.functions import Now
 
 # Create your models here.
 
-class MachineEvent(models.Model):
-    userId = models.ForeignKey('User', on_delete=models.PROTECT)
-    machineId = models.ForeignKey('Machine', on_delete=models.PROTECT)
-    eventType = models.ForeignKey('EventType', on_delete=models.PROTECT)
-    eventTime = models.DateTimeField(db_default=Now())
+# class MachineEvent(models.Model):
+#     userId = models.ForeignKey('User', on_delete=models.PROTECT)
+#     machineId = models.ForeignKey('Machine', on_delete=models.PROTECT)
+#     eventType = models.ForeignKey('EventType', on_delete=models.PROTECT)
+#     eventTime = models.DateTimeField(db_default=Now())
 
 class EventType(models.Model):
     eventDescription = models.CharField(max_length=200)
