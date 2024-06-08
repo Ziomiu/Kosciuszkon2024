@@ -24,22 +24,21 @@ class User(models.Model):
 class UserBalance(models.Model):
     balance = models.DecimalField(max_digits=10, decimal_places=2)
 
-
 class UserBottleDetails(models.Model):
     depositedBottles = models.IntegerField(default=0)
 
 class Address(models.Model):
     city = models.CharField()
     street = models.CharField()
-    home_number = models.CharField()
+    homeNumber = models.CharField()
     latitude = models.DecimalField(decimal_places = 7, max_digits = 10)
     longitude = models.DecimalField(decimal_places = 7, max_digits = 10)
 
 class BottlesInAutomat(models.Model):
-    plastic_bottles_now = models.IntegerField(
+    plasticBottlesNow = models.IntegerField(
         default = 0
     )
-    plastic_bottles_limit = models.IntegerField(
+    plasticBottlesLimit = models.IntegerField(
         default = 50
     )
 
@@ -53,4 +52,17 @@ class Machine(models.Model):
         BottlesInAutomat,
         on_delete = models.CASCADE,
         null = True
+    )
+
+class BottlesCollectionHistory(models.Model):
+    machineId = models.ForeignKey(
+        Machine,
+        on_delete = models.CASCADE,
+        null = True
+    )
+    date = models.DateTimeField(
+        default = Now()
+    )
+    plasticBottlesCollected = models.IntegerField(
+        default = 0
     )
