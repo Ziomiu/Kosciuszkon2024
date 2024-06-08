@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './HomeScreen';
 import SettingsScreen from './SettingsScreen';
 import MapScreen from './MapScreen';
 
+
 const Tab = createBottomTabNavigator();
 
 function MainScreen() {
+
+
   return (
     <Tab.Navigator
-      initialRouteName='Home'
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -35,5 +39,4 @@ function MainScreen() {
     </Tab.Navigator>
   );
 }
-
 export default MainScreen;
