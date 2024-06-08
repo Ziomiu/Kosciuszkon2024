@@ -1,0 +1,5 @@
+LOGIN = "PostgreSQL"
+PASSWORD = "hayDay71c"
+HOST = "34.118.22.65"
+PORT = "5432"
+NAME = "kosciuszkon"
