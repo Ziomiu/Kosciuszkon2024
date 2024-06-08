@@ -6,7 +6,7 @@ from django.contrib.auth.hashers import make_password, check_password
 
 class EventType(models.TextChoices):
     DEPOSIT_BOTTLE = 'DEPOSIT_BOTTLE'
-    WITHDRAW_ALL = 'STOP', 'Stop'
+    WITHDRAW_ALL = 'WITHDRAW_ALL'
 
 class MachineEvent(models.Model):
     userId = models.ForeignKey('User', on_delete=models.PROTECT)
@@ -70,8 +70,8 @@ class Machine(models.Model):
 class BottlesCollectionHistory(models.Model):
     machineId = models.ForeignKey(
         Machine,
-        on_delete = models.CASCADE,
-        null = True
+        on_delete = models.PROTECT,
+        null = False
     )
     date = models.DateTimeField(
         default = Now()
