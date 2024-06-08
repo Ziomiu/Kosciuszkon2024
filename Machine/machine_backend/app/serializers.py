@@ -12,8 +12,14 @@ class MachineEventSerializer(serializers.ModelSerializer):
         machine_event = MachineEvent.objects.create(**validated_data)
 
         event_type = validated_data.get('eventType')
+        machine_id = validated_data.get('machineId')
         if event_type == EventType.DEPOSIT_BOTTLE:
-            log_message = f"Machine event {machine_event.id} started."
+            bottles_in_automat = BottlesInAutomat.objects.filter(machine_id=machine_id).first()
+            bottles_in_automat.deposit_amount +=1
+
+
+
+
         elif event_type == EventType.WITHDRAW_ALL:
             log_message = f"Machine event {machine_event.id} stopped."
 

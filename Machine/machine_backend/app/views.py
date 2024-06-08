@@ -40,6 +40,18 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({'detail': 'User not found'}, status=404)
         return Response({'detail': 'Phone number is required'}, status=400)
 
+    @action(detail=False, methods=['get'], url_path='get-by-id')
+    def get_by_id(self, request):
+        user_id = request.query_params.get('id', None)
+        if user_id is not None:
+            try:
+                user = User.objects.get(id=user_id)
+                serializer = self.get_serializer(user)
+                return Response(serializer.data)
+            except User.DoesNotExist:
+                return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'detail': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
 class UserBalanceViewSet(viewsets.ModelViewSet):
     queryset = UserBalance.objects.all()
     serializer_class = UserBalanceSerializer
