@@ -65,6 +65,19 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class MachineSerializer(serializers.ModelSerializer):
+    address = AddressSerializer(write_only=True)
+    address_data = AddressSerializer(source='addressId', read_only=True)
+    bottles_in_automat_data = BottlesInAutomatSerializer(source='bottlesInAutomatId', read_only=True)
     class Meta:
         model = Machine
         fields = '__all__'
+        read_only_fields = ('addressId','bottlesInAutomatId')
+
+    def create(self, validated_data):
+        address_data = validated_data.pop('address')
+
+        address = Address.objects.create(**address_data)
+        bottles_in_automat = BottlesInAutomat.objects.create()
+
+        machine = Machine.objects.create(addressId=address, bottlesInAutomatId=bottles_in_automat, **validated_data)
+        return machine
