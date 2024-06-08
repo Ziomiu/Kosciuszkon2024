@@ -8,6 +8,17 @@ class MachineEventSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('eventTime',)
 
+    def create(self, validated_data):
+        machine_event = MachineEvent.objects.create(**validated_data)
+
+        event_type = validated_data.get('eventType')
+        if event_type == EventType.DEPOSIT_BOTTLE:
+            log_message = f"Machine event {machine_event.id} started."
+        elif event_type == EventType.WITHDRAW_ALL:
+            log_message = f"Machine event {machine_event.id} stopped."
+
+        return machine_event
+
 
 class BottlesInAutomatSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,11 +34,6 @@ class BottlesCollectionHistorySerializer(serializers.ModelSerializer):
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = '__all__'
-
-class EventTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = EventType
         fields = '__all__'
 
 

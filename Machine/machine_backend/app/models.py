@@ -4,17 +4,16 @@ from django.contrib.auth.hashers import make_password, check_password
 
 # Create your models here.
 
+class EventType(models.TextChoices):
+    DEPOSIT_BOTTLE = 'DEPOSIT_BOTTLE'
+    WITHDRAW_ALL = 'STOP', 'Stop'
+
 class MachineEvent(models.Model):
     userId = models.ForeignKey('User', on_delete=models.PROTECT)
     machineId = models.ForeignKey('Machine', on_delete=models.PROTECT)
-    eventType = models.ForeignKey('EventType', on_delete=models.PROTECT)
+    eventType = models.CharField(max_length=20, choices=EventType.choices)
     eventTime = models.DateTimeField(db_default=Now())
 
-class EventType(models.Model):
-    eventDescription = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.eventDescription
 
 class User(models.Model):
     name = models.CharField(max_length=100)

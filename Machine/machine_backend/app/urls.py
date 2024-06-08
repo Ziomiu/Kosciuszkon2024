@@ -1,12 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import (EventTypeViewSet, UserViewSet, UserBalanceViewSet,
+from .views import (UserViewSet, UserBalanceViewSet,
                     UserBottleDetailsViewSet, MachineEventViewSet,
                     BottlesInAutomatViewSet, BottlesCollectionHistoryViewSet,
                     AddressViewSet, MachineViewSet, LoginView)
 
 router = DefaultRouter()
-router.register(r'event-types', EventTypeViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'user-balances', UserBalanceViewSet)
 router.register(r'user-bottle-details', UserBottleDetailsViewSet)

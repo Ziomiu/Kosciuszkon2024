@@ -7,7 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import MachineEvent, BottlesInAutomat, BottlesCollectionHistory, Address, EventType, User, UserBalance, UserBottleDetails, Machine
 from .serializers import (MachineEventSerializer, BottlesInAutomatSerializer,
                           BottlesCollectionHistorySerializer, AddressSerializer,
-                          EventTypeSerializer, UserSerializer, UserBalanceSerializer,
+                        UserSerializer, UserBalanceSerializer,
                           UserBottleDetailsSerializer, MachineSerializer)
 
 class MachineEventViewSet(viewsets.ModelViewSet):
@@ -25,10 +25,6 @@ class BottlesCollectionHistoryViewSet(viewsets.ModelViewSet):
 class AddressViewSet(viewsets.ModelViewSet):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
-
-class EventTypeViewSet(viewsets.ModelViewSet):
-    queryset = EventType.objects.all()
-    serializer_class = EventTypeSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -74,4 +70,5 @@ class LoginView(views.APIView):
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token),
+            'user_id': str(user.id)
         }, status=status.HTTP_200_OK)
