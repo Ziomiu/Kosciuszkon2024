@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 const HomeScreen = () => {
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/users/", {
+          method: 'GET',
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data)
+        } else {
+          console.error('Failed to fetch user details');
+        }
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    };
+  
+    fetchUserDetails();
+  }, []);
+  
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <Text></Text>
       <StatusBar style="auto" />
     </View>
   );
