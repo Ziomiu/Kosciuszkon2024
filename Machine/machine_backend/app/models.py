@@ -4,14 +4,17 @@ from django.db.models.functions import Now
 
 # Create your models here.
 
-# class MachineEvent(models.Model):
-#     userId = models.ForeignKey('User', on_delete=models.PROTECT)
-#     machineId = models.ForeignKey('Machine', on_delete=models.PROTECT)
-#     eventType = models.ForeignKey('EventType', on_delete=models.PROTECT)
-#     eventTime = models.DateTimeField(db_default=Now())
+class MachineEvent(models.Model):
+    userId = models.ForeignKey('User', on_delete=models.PROTECT)
+    machineId = models.ForeignKey('Machine', on_delete=models.PROTECT)
+    eventType = models.ForeignKey('EventType', on_delete=models.PROTECT)
+    eventTime = models.DateTimeField(db_default=Now())
 
 class EventType(models.Model):
     eventDescription = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.eventDescription
 
 class User(models.Model):
     name = models.CharField(max_length=100)
@@ -19,6 +22,8 @@ class User(models.Model):
     phone = models.CharField(max_length=100)
     userBalanceId = models.ForeignKey('UserBalance', on_delete=models.CASCADE)
     userBottleDetailsId = models.ForeignKey('UserBottleDetails', on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.name}  {self.surname}"
 
 
 class UserBalance(models.Model):
