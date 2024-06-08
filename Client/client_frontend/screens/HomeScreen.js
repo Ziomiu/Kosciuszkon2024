@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
-  const [users, setUsers] = useState([])
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const fetchUserDetails = async () => {
+    const fetchUserData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/users/", {
-          method: 'GET',
-        });
-  
-        if (response.ok) {
-          const data = await response.json();
-          setUsers(data)
-        } else {
-          console.error('Failed to fetch user details');
-        }
+        const storedData = JSON.parse(await AsyncStorage.getItem('data'));
+        setUserData(storedData);
       } catch (error) {
-        console.error('Error fetching user details:', error);
+        console.error('Failed to load data from AsyncStorage:', error);
       }
     };
-  
-    fetchUserDetails();
+
+    fetchUserData();
   }, []);
   
   return (
     <View style={styles.container}>
-      <Text></Text>
+      {userData && userData.name && (
+        <Text>Witaj {userData.name}</Text>
+      )}
+      {userData && userData.userBalanceId.balance && (
+        <Text>Masz {userData.userBalanceId.balance} zł</Text>
+      )}
       <StatusBar style="auto" />
     </View>
   );
