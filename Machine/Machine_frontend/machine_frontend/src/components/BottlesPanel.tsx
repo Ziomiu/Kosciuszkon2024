@@ -30,7 +30,7 @@ export default function BottlesPanel() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const machineId = 1;
-    const userId = 1;
+    const userId = parseInt(localStorage.getItem("userId") || "0");
 
     const handleBottleInsert = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -45,17 +45,16 @@ export default function BottlesPanel() {
                         machineId: machineId
                     }
 
-                    setBottlesInserted(state => state + 1);
                     console.log(data)
 
-                    const response = await fetch(`http://127.0.0.1:8000/api/machine-events/`, {
+                    const response = await fetch(`http://127.0.0.1:8000/api/machine-events`, {
                         method: "POST",
                         body: JSON.stringify(data),
                     })
 
                     if (response.ok) {
                         setBottlesInserted(state => state + 1);
-                        // fetchMachineDetails();
+                        fetchMachineDetails();
                     }
                 } catch (error) {
                     console.error(error)
@@ -84,6 +83,10 @@ export default function BottlesPanel() {
         document.getElementById('file-input')?.click();
     }
 
+    useEffect(() => {
+        fetchMachineDetails();
+    }, [])
+
     return <>
         <Paper
             elevation={16}
@@ -99,7 +102,7 @@ export default function BottlesPanel() {
             }}
         >
             <Header />
-            {1 && <>
+            {machineDetails && <>
                 <div style={{
                     display: "flex",
                     flexDirection: "row",
@@ -107,11 +110,11 @@ export default function BottlesPanel() {
                 }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                         <h2 style={{ textAlign: "left", padding: "10px", color: "#DAD3BE" }}>
-                            {`Bottles inserted today:`}
+                            Wrzucone butelki
                         </h2>
                         <h2 style={{ width: "100%", height: "10%", border: "#DAD3BE solid 1px", textAlign: "left", padding: "10px", color: "#DAD3BE" }}>{`${bottlesInserted}`}</h2>
                         <h2 style={{ textAlign: "left", padding: "10px", color: "#DAD3BE" }}>
-                            {`Amount of money earned:`}
+                            Kwota do wypłacenia
                         </h2>
                         <Typography style={{ width: "100%", height: "10%", border: "#DAD3BE solid 1px", textAlign: "left", padding: "10px", color: "#DAD3BE", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                             <h2>{`${(0.50 * bottlesInserted).toFixed(2)}`}</h2>
@@ -130,7 +133,7 @@ export default function BottlesPanel() {
                             }}
                             endIcon={<RecyclingIcon sx={{ fontSize: "24px" }} />}
                         >
-                            Insert Bottle
+                            Wrzuć
                         </Button>
                         <input
                             type="file"
@@ -148,8 +151,8 @@ export default function BottlesPanel() {
                         )}
                     </div>
                 </div>
+                <Fillment percentage={machineDetails.bottles_in_automat_data.plasticBottlesNow / machineDetails.bottles_in_automat_data.plasticBottlesLimit} />
             </>}
-            <Fillment percentage={0.87} />
             <Footer />
         </Paper>
     </>

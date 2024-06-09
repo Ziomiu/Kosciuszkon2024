@@ -12,7 +12,7 @@ export default function Header() {
             <h1
                 style={{ textAlign: "left", padding: "10px", color: "#DAD3BE" }}
             >
-                EcoDrop!
+                Butelkomat
             </h1>
             <IconButton
                 href = "http://localhost:5173/"
