@@ -1,7 +1,6 @@
 import { IconButton } from "@mui/material";
 import Tile from "./Tile"
 import BackspaceIcon from '@mui/icons-material/Backspace';
-import PublicIcon from '@mui/icons-material/Public';
 
 export default function Numpad(params: {backspaceHandler: () => void, newDigitHandler: (newDigit: number) => void}) {
     const digits = [...Array(10)].map((_, i) => (i + 1) % 10)

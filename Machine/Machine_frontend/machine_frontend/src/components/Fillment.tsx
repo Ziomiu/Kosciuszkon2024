@@ -14,12 +14,12 @@ const bottlesBar = (percentage: number) => {
     return <>
         <div>
             {
-                [...Array(Math.round(percentage * 10))].map((_, i)=>
+                [...Array(Math.ceil(percentage * 10))].map((_, i)=>
                     <FaBottleWater color={iconColor(i)} fontSize="50px" />
                 )
             }
             {
-                [...Array(Math.floor(10 - percentage * 10))].map(_ =>
+                [...Array(10 - Math.ceil(percentage * 10))].map(_ =>
                     <FaBottleWater color="transparent" stroke="grey" strokeWidth="20px" fontSize="50px" />
                 )
             }
