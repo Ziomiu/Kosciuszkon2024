@@ -4,6 +4,22 @@ import { Button, Paper } from "@mui/material";
 import Header from "./Header";
 import Footer from "./Footer";
 
+type User = {
+    id: string,
+    name: string,
+    password: string,
+    phone: string,
+    surname: string,
+    userBalanceId: {
+        id: string,
+        balance: string
+    },
+    userBottleDetailsId: {
+        id: string,
+        depositedBottles: number
+    }
+}
+
 export default function LoginPanel() {
     const [phoneNumber, setPhoneNumber] = useState<string>("");
 
@@ -19,11 +35,20 @@ export default function LoginPanel() {
         }
     }
 
-    const loginHandler = () => {
+    const loginHandler = async () => {
         const condition = true
 
-        if (condition) {
+        const response = await fetch(`http://127.0.0.1:8000/api/users/find-by-telephone?phone=${phoneNumber}`, {
+            method: "GET",
+        })
+
+        if (response.ok) {
+            const data: User = await response.json()
+
             window.location.href = "http://localhost:5173/bottles-panel"
+            localStorage.setItem("userId", data.id)
+        } else {
+            alert("Nie znaleziono użytkownika zarejestrowanego na dany numer telefonu!")
         }
     }
 
@@ -58,7 +83,7 @@ export default function LoginPanel() {
                     flexDirection: "column"
                 }}>
                     
-                    <h1 style={{ textAlign: "left", padding: "10px", color: "#DAD3BE" }}>Phone number</h1>
+                    <h1 style={{ textAlign: "left", padding: "10px", color: "#DAD3BE" }}>Numer telefonu</h1>
                     <h1 style={{ width: "80%", height: "10%", border: "#DAD3BE solid 1px", textAlign: "left", padding: "10px", color: "#DAD3BE"}}>{`+48 ${phoneNumber}`}</h1>
                     <Button
                         onClick={_ => loginHandler()}
@@ -71,7 +96,7 @@ export default function LoginPanel() {
                             fontSize: "24px"
                         }}
                     >
-                        Continue
+                        Kontynuuj
                     </Button>
                 </div>
             </div>
