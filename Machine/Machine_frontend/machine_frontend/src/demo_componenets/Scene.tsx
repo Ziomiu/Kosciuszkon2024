@@ -72,6 +72,9 @@ const App = () => {
         if (clickCount === 1) {
             setTargetPosition(new THREE.Vector3(0, 0, -0.2));
         }
+        if (clickCount === 2){
+            window.location.href = '/'
+        }
 
         setClickCount(clickCount + 1);
     };
