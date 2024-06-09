@@ -35,7 +35,7 @@ function MainScreen() {
     >
       <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      {/* <Tab.Screen name="Settings" component={SettingsScreen} /> */}
     </Tab.Navigator>
   );
 }
