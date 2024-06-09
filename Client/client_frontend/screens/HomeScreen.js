@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -19,14 +19,25 @@ const HomeScreen = () => {
     fetchUserData();
   }, []);
   
+  const onPressWithdraw = () => {
+    return true;
+  };
+
   return (
     <View style={styles.container}>
       {userData && userData.name && (
-        <Text>Witaj {userData.name}</Text>
+        <Text style={styles.welcomeText}>Hello {userData.name}!</Text>
       )}
       {userData && userData.userBalanceId.balance && (
-        <Text>Masz {userData.userBalanceId.balance} zł</Text>
+        <Text style={styles.balanceText}>Your balance: {userData.userBalanceId.balance} zł</Text>
       )}
+      {!userData && (
+        <>
+          <Text style={styles.welcomeText}>Hello    !</Text>
+          <Text style={styles.balanceText}>Your balance: 10 zł</Text>
+        </>
+      )}
+      <Button title="Withdraw" onPress={onPressWithdraw} />
       <StatusBar style="auto" />
     </View>
   );
@@ -39,10 +50,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  image: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
+  welcomeText: {
+    position: 'absolute',
+    top: 150, 
+    textAlign: 'center',
+    width: '100%',
+    fontSize: 24,
+    fontWeight: 'bold',  
+  },
+  balanceText: {
+    marginTop: 80,
+    textAlign: 'center',
+    fontSize: 18,
+    bottom: 40 
   },
 });
 
