@@ -2,6 +2,8 @@ from rest_framework import serializers
 from .models import MachineEvent, BottlesInAutomat, BottlesCollectionHistory, Address, EventType, User, UserBalance, UserBottleDetails, Machine
 
 # Define your serializers here
+
+
 class MachineEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = MachineEvent
@@ -13,15 +15,19 @@ class MachineEventSerializer(serializers.ModelSerializer):
 
         event_type = validated_data.get('eventType')
         machine_id = validated_data.get('machineId')
+        bottles_in_automat = BottlesInAutomat.objects.filter(id=machine_id.id).first()
         if event_type == EventType.DEPOSIT_BOTTLE:
-            bottles_in_automat = BottlesInAutomat.objects.filter(machine_id=machine_id).first()
-            bottles_in_automat.deposit_amount +=1
-
-
+            bottles_in_automat.plasticBottlesNow +=1
+            bottles_in_automat.save()
 
 
         elif event_type == EventType.WITHDRAW_ALL:
-            log_message = f"Machine event {machine_event.id} stopped."
+            BottlesCollectionHistory.objects.create(
+                machineId=machine_id,
+                plasticBottlesCollected=bottles_in_automat.plasticBottlesNow
+            )
+            bottles_in_automat.plasticBottlesNow = 0
+            bottles_in_automat.save()
 
         return machine_event
 
