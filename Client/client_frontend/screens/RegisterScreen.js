@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 
 export default function RegisterScreen({ navigation }) {
     const [phone, setPhone] = useState('');
@@ -11,6 +11,8 @@ export default function RegisterScreen({ navigation }) {
         const registerResponse = await registerUser(phone, password, name, surname);
         if (registerResponse) {
             navigation.navigate('Login');
+        } else {
+            Alert.alert('Registration Failed', 'Please check your details and try again.');
         }
     };
 
