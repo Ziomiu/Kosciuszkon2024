@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Numpad from "./Numpad";
-import { Button, Divider, Paper } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import Header from "./Header";
 import Footer from "./Footer";
 
