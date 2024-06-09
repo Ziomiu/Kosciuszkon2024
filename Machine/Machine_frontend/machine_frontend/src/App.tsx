@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Scene from "./demo_componenets/Scene.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,9 @@ const router = createBrowserRouter([
   {
     path: "/bottles-panel",
     element: <BottlesPanel />
-  }
+  },
+  {path: "/visualize",
+  element: <Scene/>}
 ]);
 
 export default function App() {

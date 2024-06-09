@@ -7,7 +7,6 @@ export default function LoginPanel() {
         <Paper
             elevation={16}
             style={{
-                width: "50vw",
                 backgroundColor: "#254336",
                 padding: "30px 60px",
                 display: "flex",

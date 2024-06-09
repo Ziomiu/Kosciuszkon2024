@@ -36,7 +36,6 @@ export default function LoginPanel() {
     }
 
     const loginHandler = async () => {
-        const condition = true
 
         const response = await fetch(`http://127.0.0.1:8000/api/users/find-by-telephone?phone=${phoneNumber}`, {
             method: "GET",
@@ -56,14 +55,12 @@ export default function LoginPanel() {
         <Paper
             elevation={16}    
             style={{
-                width: "50vw",
                 backgroundColor: "#254336",
                 padding: "30px 60px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
                 gap: "20px",
-                aspectRatio: "1.5"
             }}
         >
             <Header />
